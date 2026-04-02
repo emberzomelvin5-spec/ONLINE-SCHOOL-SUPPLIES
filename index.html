@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>PCUD Supplies Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- ========== LOGIN ========== -->
+<div id="page-login" class="page active">
+  <div class="auth-left">
+    <div class="al-z">
+      <div class="al-logo">
+        <div class="al-logo-box"><i class="fa-solid fa-box-open"></i></div>
+        <span>PCUD <em>Supplies</em></span>
+      </div>
+      <div class="al-tag">
+        <h2>Your campus store,<br/><span>online.</span></h2>
+        <p>Browse, order, and receive school supplies without leaving campus.</p>
+      </div>
+    </div>
+    <ul class="al-feats">
+      <li><span class="al-fi"><i class="fa-solid fa-cart-shopping"></i></span>Order from anywhere on campus</li>
+      <li><span class="al-fi"><i class="fa-solid fa-credit-card"></i></span>Pay via GCash or Cash</li>
+      <li><span class="al-fi"><i class="fa-solid fa-location-dot"></i></span>Deliver to your room or pickup point</li>
+      <li><span class="al-fi"><i class="fa-solid fa-bolt"></i></span>Fast, simple, no hassle</li>
+    </ul>
+  </div>
+  <div class="auth-right">
+    <div class="ar-hd"><h2>Welcome back <i class="fa-solid fa-hand-wave" style="color:var(--gold)"></i></h2><p>Log in to your PCUD Supplies account.</p></div>
+    <div class="errbox" id="lerr"></div>
+    <div class="fgrp">
+      <div class="field"><label>Student ID / Username</label><input type="text" id="lid" placeholder="e.g. student1"/></div>
+      <div class="field"><label>Password</label><input type="password" id="lpw" placeholder="••••••••"/></div>
+    </div>
+    <button class="btn-main" onclick="doLogin()"><i class="fa-solid fa-right-to-bracket"></i> Log In</button>
+    <div class="divider">or</div>
+    <div class="sw">No account? <a onclick="showPage('page-register')">Register here</a></div>
+  </div>
+</div>
+
+<!-- ========== REGISTER ========== -->
+<div id="page-register" class="page">
+  <div class="auth-left">
+    <div class="al-z">
+      <div class="al-logo">
+        <div class="al-logo-box"><i class="fa-solid fa-box-open"></i></div>
+        <span>PCUD <em>Supplies</em></span>
+      </div>
+      <div class="al-tag">
+        <h2>Join the<br/><span>PCUD community.</span></h2>
+        <p>Create your account and start ordering school supplies today.</p>
+      </div>
+    </div>
+    <ul class="al-feats">
+      <li><span class="al-fi"><i class="fa-solid fa-graduation-cap"></i></span>For students, faculty &amp; staff</li>
+      <li><span class="al-fi"><i class="fa-solid fa-boxes-stacked"></i></span>16 products ready to order</li>
+      <li><span class="al-fi"><i class="fa-solid fa-shield-halved"></i></span>Your data stays on your device</li>
+      <li><span class="al-fi"><i class="fa-solid fa-mobile-screen"></i></span>Works offline, no server needed</li>
+    </ul>
+  </div>
+  <div class="auth-right">
+    <div class="ar-hd"><h2><i class="fa-solid fa-user-plus" style="color:var(--blue)"></i> Create Account</h2><p>Fill in your details to get started.</p></div>
+    <div class="errbox" id="rerr"></div>
+    <div class="fgrp">
+      <div class="field"><label>Full Name</label><input type="text" id="rname" placeholder="Juan dela Cruz"/></div>
+      <div class="field"><label>Student ID / Username</label><input type="text" id="rid" placeholder="e.g. 2024-00001"/></div>
+      <div class="field"><label>Course &amp; Section</label><input type="text" id="rcourse" placeholder="e.g. BSCPE-2A"/></div>
+      <div class="field"><label>Role</label>
+        <select id="rrole">
+          <option value="student">Student</option>
+          <option value="faculty">Faculty</option>
+          <option value="staff">Campus Staff</option>
+        </select>
+      </div>
+      <div class="field"><label>Password</label><input type="password" id="rpw" placeholder="Create a password"/></div>
+      <div class="field"><label>Confirm Password</label><input type="password" id="rpw2" placeholder="Repeat password"/></div>
+    </div>
+    <button class="btn-main" onclick="doRegister()"><i class="fa-solid fa-user-plus"></i> Create Account</button>
+    <div class="divider">or</div>
+    <div class="sw">Already have an account? <a onclick="showPage('page-login')">Log in</a></div>
+  </div>
+</div>
+
+<!-- ========== STORE ========== -->
+<div id="page-store" class="page">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <div class="nav-brand-box"><i class="fa-solid fa-box-open"></i></div>
+      <span>PCUD <em>Supplies</em></span>
+    </div>
+    <div class="nav-search">
+      <i class="fa-solid fa-magnifying-glass" style="color:rgba(255,255,255,.6);font-size:13px"></i>
+      <input type="text" id="search-inp" placeholder="Search products..." oninput="filterProds()"/>
+    </div>
+    <div class="nav-right">
+      <div class="nav-ico" onclick="goCart()" title="Cart">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="badge" id="cart-badge">0</span>
+      </div>
+      <div class="nav-ico" onclick="showPage('page-orders')" title="My Orders">
+        <i class="fa-solid fa-box"></i>
+      </div>
+      <div class="nav-ico" id="notif-btn" onclick="toggleNotifPanel()" title="Notifications" style="position:relative">
+        <i class="fa-solid fa-bell"></i>
+        <span class="badge" id="notif-badge" style="display:none;background:#e53e3e">0</span>
+      </div>
+      <div class="nav-user-av" id="nav-av">M</div>
+      <button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </nav>
+
+  <!-- NOTIFICATION PANEL -->
+  <div id="notif-panel" class="notif-panel"></div>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h2>Everything you need,<br/><span>right on campus.</span></h2>
+        <p>Fast delivery to your room or pickup point. Order in minutes.</p>
+      </div>
+      <div class="hero-art">
+        <i class="fa-solid fa-book"></i>
+        <i class="fa-solid fa-pencil"></i>
+        <i class="fa-solid fa-ruler"></i>
+        <i class="fa-solid fa-pen"></i>
+        <i class="fa-solid fa-book-open"></i>
+      </div>
+    </div>
+  </div>
+  <div class="stats-wrap">
+    <div class="stat-c"><div class="stat-n bl" id="s-prods">0</div><div class="stat-l">Products</div></div>
+    <div class="stat-c"><div class="stat-n gd" id="s-cart">0</div><div class="stat-l">In Cart</div></div>
+    <div class="stat-c"><div class="stat-n gr" id="s-orders">0</div><div class="stat-l">My Orders</div></div>
+  </div>
+  <div class="store-body">
+    <div class="filter-bar">
+      <button class="fb active" onclick="setCat('all',this)"><i class="fa-solid fa-border-all"></i> All</button>
+      <button class="fb" onclick="setCat('writing',this)"><i class="fa-solid fa-pencil"></i> Writing</button>
+      <button class="fb" onclick="setCat('paper',this)"><i class="fa-solid fa-file-lines"></i> Paper</button>
+      <button class="fb" onclick="setCat('art',this)"><i class="fa-solid fa-palette"></i> Art</button>
+      <button class="fb" onclick="setCat('org',this)"><i class="fa-solid fa-folder"></i> Organizers</button>
+    </div>
+    <div class="prod-grid" id="prod-grid"></div>
+  </div>
+</div>
+
+<!-- ========== CART ========== -->
+<div id="page-cart" class="page">
+  <nav class="navbar">
+    <div class="nav-brand"><div class="nav-brand-box"><i class="fa-solid fa-box-open"></i></div><span>PCUD <em>Supplies</em></span></div>
+    <div class="nav-right"><button class="btn-logout" onclick="showPage('page-store')"><i class="fa-solid fa-arrow-left"></i> Back to Store</button></div>
+  </nav>
+  <div class="sub-hdr">
+    <button class="back-btn" onclick="showPage('page-store')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+    <h2><i class="fa-solid fa-cart-shopping" style="color:var(--blue)"></i> Shopping Cart</h2>
+  </div>
+  <div class="cart-wrap">
+    <div class="cart-list" id="cart-list"></div>
+    <div id="cart-sum"></div>
+  </div>
+</div>
+
+<!-- ========== CHECKOUT ========== -->
+<div id="page-checkout" class="page">
+  <nav class="navbar">
+    <div class="nav-brand"><div class="nav-brand-box"><i class="fa-solid fa-box-open"></i></div><span>PCUD <em>Supplies</em></span></div>
+    <div class="nav-right"><button class="btn-logout" onclick="showPage('page-cart')"><i class="fa-solid fa-arrow-left"></i> Back</button></div>
+  </nav>
+  <div class="sub-hdr">
+    <button class="back-btn" onclick="showPage('page-cart')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+    <h2><i class="fa-solid fa-bag-shopping" style="color:var(--blue)"></i> Checkout</h2>
+  </div>
+  <div class="ck-wrap">
+    <div class="ck-sec">
+      <h3><i class="fa-solid fa-location-dot" style="color:var(--red)"></i> Delivery / Pickup Note</h3>
+      <div class="field"><textarea id="ck-note" placeholder="Enter your room number or pickup location&#10;e.g. Room 201, Building A, Ground Floor"></textarea></div>
+    </div>
+    <div class="ck-sec">
+      <h3><i class="fa-solid fa-credit-card" style="color:var(--blue)"></i> Payment Method</h3>
+      <div class="pay-opts">
+        <label class="pay-card" id="pc-gcash" onclick="selPay('gcash')">
+          <input type="radio" name="pay" value="gcash"/>
+          <span class="pay-em"><i class="fa-solid fa-mobile-screen-button" style="color:#1571d4"></i></span>
+          <span>GCash QR</span>
+        </label>
+        <label class="pay-card" id="pc-cash" onclick="selPay('cash')">
+          <input type="radio" name="pay" value="cash"/>
+          <span class="pay-em"><i class="fa-solid fa-money-bills" style="color:var(--green)"></i></span>
+          <span>Cash on Pickup</span>
+        </label>
+      </div>
+      <div class="gcash-box" id="gcash-box">
+        <div class="qr-mock">
+          <i class="fa-solid fa-qrcode" style="font-size:80px;color:var(--blue)"></i>
+          <p>Scan to pay via GCash</p>
+          <small>Send screenshot as proof of payment</small>
+        </div>
+      </div>
+    </div>
+    <div class="ck-sec">
+      <h3><i class="fa-solid fa-receipt" style="color:var(--blue)"></i> Order Summary</h3>
+      <div id="ck-summary"></div>
+    </div>
+    <button class="btn-main" onclick="placeOrder()"><i class="fa-solid fa-check"></i> Place Order</button>
+  </div>
+</div>
+
+<!-- ========== CONFIRMATION ========== -->
+<div id="page-confirm" class="page">
+  <nav class="navbar"><div class="nav-brand"><div class="nav-brand-box"><i class="fa-solid fa-box-open"></i></div><span>PCUD <em>Supplies</em></span></div></nav>
+  <div class="confirm-wrap">
+    <div class="conf-ic"><i class="fa-solid fa-circle-check" style="color:var(--green)"></i></div>
+    <h2>Order Placed!</h2>
+    <p id="conf-msg">Your order has been received.</p>
+    <div class="track">
+      <div class="trk-step done"><div class="trk-dot"></div><span>Placed</span></div>
+      <div class="trk-line done"></div>
+      <div class="trk-step active"><div class="trk-dot"></div><span>Processing</span></div>
+      <div class="trk-line"></div>
+      <div class="trk-step"><div class="trk-dot"></div><span>On the Way</span></div>
+      <div class="trk-line"></div>
+      <div class="trk-step"><div class="trk-dot"></div><span>Delivered</span></div>
+    </div>
+    <div class="conf-btns">
+      <button class="btn-main" style="width:auto;padding:11px 22px" onclick="showPage('page-store')"><i class="fa-solid fa-store"></i> Continue Shopping</button>
+      <button class="btn-sec" onclick="showPage('page-orders')"><i class="fa-solid fa-box"></i> View My Orders</button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== MY ORDERS ========== -->
+<div id="page-orders" class="page">
+  <nav class="navbar">
+    <div class="nav-brand"><div class="nav-brand-box"><i class="fa-solid fa-box-open"></i></div><span>PCUD <em>Supplies</em></span></div>
+    <div class="nav-right"><button class="btn-logout" onclick="showPage('page-store')"><i class="fa-solid fa-arrow-left"></i> Back</button></div>
+  </nav>
+  <div class="sub-hdr">
+    <button class="back-btn" onclick="showPage('page-store')"><i class="fa-solid fa-arrow-left"></i> Back</button>
+    <h2><i class="fa-solid fa-box" style="color:var(--blue)"></i> My Orders</h2>
+  </div>
+  <div class="orders-wrap" id="orders-wrap"></div>
+</div>
+
+<!-- ========== ADMIN ========== -->
+<div id="page-admin" class="page">
+  <nav class="navbar admin-nav">
+    <div class="nav-brand">
+      <div class="nav-brand-box"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+      <span>Admin <em>Panel</em></span>
+    </div>
+    <div class="nav-right"><button class="btn-logout" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button></div>
+  </nav>
+  <div class="admin-tabs">
+    <button class="tab-btn active" onclick="aTab('orders',this)"><i class="fa-solid fa-list-check"></i> Orders</button>
+    <button class="tab-btn" onclick="aTab('products',this)"><i class="fa-solid fa-boxes-stacked"></i> Products</button>
+    <button class="tab-btn" onclick="aTab('inquiries',this)"><i class="fa-solid fa-comments"></i> Inquiries</button>
+  </div>
+  <div class="adm-sec active" id="adm-orders">
+    <h3><i class="fa-solid fa-list-check" style="color:var(--blue)"></i> All Orders</h3>
+    <div id="adm-ord-list"></div>
+  </div>
+  <div class="adm-sec" id="adm-products">
+    <h3><i class="fa-solid fa-boxes-stacked" style="color:var(--blue)"></i> Manage Products</h3>
+    <div class="add-prod-form">
+      <div class="field"><label>Product Name</label><input type="text" id="np-name" placeholder="e.g. Marker"/></div>
+      <div class="field"><label>Price (₱)</label><input type="number" id="np-price" placeholder="25"/></div>
+      <div class="field"><label>Category</label>
+        <select id="np-cat">
+          <option value="writing">Writing</option>
+          <option value="paper">Paper</option>
+          <option value="art">Art</option>
+          <option value="org">Organizers</option>
+        </select>
+      </div>
+      <div class="field"><label>Emoji Icon</label><input type="text" id="np-em" placeholder="e.g. pencil"/></div>
+      <div class="field"><label>Initial Stock</label><input type="number" id="np-stock" placeholder="e.g. 20" min="0"/></div>
+      <button class="btn-main" onclick="addProd()"><i class="fa-solid fa-plus"></i> Add Product</button>
+    </div>
+    <div id="adm-prod-list"></div>
+  </div>
+  <div class="adm-sec" id="adm-inquiries">
+    <h3><i class="fa-solid fa-comments" style="color:var(--blue)"></i> Delivery Notes / Inquiries</h3>
+    <div id="adm-inq-list"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+</body>
+</html>
